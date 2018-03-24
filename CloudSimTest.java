@@ -90,10 +90,11 @@ public class CloudSimTest {
 			String vmm = "Xen"; // VMM name
 
 			// create VM
-			Vm vm = new Vm(vmid, brokerId, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerSpaceShared());
-
+			for(int i = 0; i < 25; i++){
+				Vm vm = new Vm(i, brokerId, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerSpaceShared());
+				vmlist.add(vm);
+			}
 			// add the VM to the vmList
-			vmlist.add(vm);
 
 			// submit vm list to the broker
 			broker.submitVmList(vmlist);
@@ -174,7 +175,7 @@ public class CloudSimTest {
 		// In this example, it will have only one core.
 		List<Pe> peList = new ArrayList<Pe>();
 
-		int mips = 1000;
+		int mips = 100000;
 
 		// 3. Create PEs and add these into a list.
 		//peList.add(new Pe(0, new PeProvisionerSimple(mips))); // need to store Pe id and MIPS Rating
@@ -186,9 +187,9 @@ public class CloudSimTest {
 		// 4. Create Host with its id and list of PEs and add them to the list
 		// of machines
 		int hostId = 0;
-		int ram = 2048; // host memory (MB)
-		long storage = 1000000; // host storage
-		int bw = 10000;
+		int ram = 24000; // host memory (MB)
+		long storage = 100000000; // host storage
+		int bw = 1000000;
 
 		hostList.add(
 			new Host(
