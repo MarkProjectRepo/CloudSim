@@ -139,19 +139,42 @@ public class CloudSimTest {
 			Log.printLine("Unwanted errors happen");
 		}
 	}
-
-	private static ArrayList<Cloudlet> generateCloudletList(int length, int fileSize, long outputSize){
+	private static ArrayList<Cloudlet> generateCloudletList(int number, int brokerId, int length, int fileSize, long outputSize){
 		ArrayList cloudletList = new ArrayList<Cloudlet>();
 
 		UtilizationModel utilizationModel = new UtilizationModelStochastic();
 		Cloudlet cloudlet;
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < number; i++) {
 			cloudlet =
-					new Cloudlet(i,(long)(Math.random()*length), pesNumber, (long)Math.random()*fileSize,
-							(long)Math.random()*outputSize, utilizationModel, utilizationModel,
+					new Cloudlet(i, (long) (Math.random() * length), 1, (long) Math.random() * fileSize,
+							(long) Math.random() * outputSize, utilizationModel, utilizationModel,
 							utilizationModel);
 			cloudlet.setUserId(brokerId);
 			cloudletList.add(cloudlet);
+		}
+		return cloudletList;
+	}
+	
+	private static ArrayList<Cloudlet> generateCloudletList(int[] range, int brokerId, int[] length, int[] fileSize, long[] outputSize){
+		ArrayList cloudletList = new ArrayList<Cloudlet>();
+
+		UtilizationModel utilizationModel = new UtilizationModelStochastic();
+		Cloudlet cloudlet;
+		int number = 0;
+		for(int n : range)
+			number += n;
+
+		int loc = 0;
+		for (int n : range){
+			for (int i = 0; i < number; i++) {
+				cloudlet =
+						new Cloudlet(i, (long) (Math.random() * length[loc]), 1, (long) Math.random() * fileSize[loc],
+								(long) Math.random() * outputSize[loc], utilizationModel, utilizationModel,
+								utilizationModel);
+				cloudlet.setUserId(brokerId);
+				cloudletList.add(cloudlet);
+			}
+			loc++;
 		}
 		return cloudletList;
 	}
