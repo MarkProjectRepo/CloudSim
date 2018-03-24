@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.cloudbus.cloudsim.Cloudlet;
-import org.cloudbus.cloudsim.CloudletSchedulerOptimizedSpaceShared;
+import org.cloudbus.cloudsim.CloudletSchedulerSpaceShared;
 import org.cloudbus.cloudsim.CloudletSchedulerTimeShared;
 import org.cloudbus.cloudsim.Datacenter;
 import org.cloudbus.cloudsim.DatacenterBroker;
@@ -98,7 +98,7 @@ public class ProjectExample {
 			//Vm vm1 = new Vm(vmid, brokerId1, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerOptimizedSpaceShared());
 
 			for(int i = 0; i < 25; i++){
-				Vm vm1 = new Vm(i, brokerId1, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerOptimizedSpaceShared());
+				Vm vm1 = new Vm(i, brokerId1, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerSpaceShared());
 				vmlist1.add(vm1);
 			}
 			
@@ -106,7 +106,7 @@ public class ProjectExample {
 			//Vm vm2 = new Vm(vmid, brokerId2, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerOptimizedSpaceShared());
 
 			for(int i = 0; i < 25; i++){
-				Vm vm2 = new Vm(i, brokerId2, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerOptimizedSpaceShared());
+				Vm vm2 = new Vm(i, brokerId2, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerSpaceShared());
 				vmlist2.add(vm2);
 			}
 			//add the VMs to the vmlists
