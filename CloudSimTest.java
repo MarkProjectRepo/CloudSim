@@ -162,7 +162,11 @@ public class CloudSimTest {
 		int mips = 1000;
 
 		// 3. Create PEs and add these into a list.
-		peList.add(new Pe(0, new PeProvisionerSimple(mips))); // need to store Pe id and MIPS Rating
+		//peList.add(new Pe(0, new PeProvisionerSimple(mips))); // need to store Pe id and MIPS Rating
+
+		for(int i = 0; i < 20; i++){
+			peList.add(new Pe(i, new PeProvisionerSimple(mips))); // need to store Pe id and MIPS Rating
+		}
 
 		// 4. Create Host with its id and list of PEs and add them to the list
 		// of machines
