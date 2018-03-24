@@ -110,10 +110,10 @@ public class CloudSimTest {
 			*/
 
 			//Range based cloudlet properties
-			int[] range = {100, 200, 100};
-			long[] rangelength = {100, 250, 400};
-			long[] rangefileSize = {75, 150, 300};
-			long[] rangeoutputSize = {75, 150, 300};
+			int[] range = {100, 200, 100}; // Range represents the {Low , Medium , High} range cloudlets
+			long[] rangelength = {1000, 25000, 40000}; // The following properties are the same as for cloudlet but for their respective activity levels
+			long[] rangefileSize = {750, 15000, 30000};
+			long[] rangeoutputSize = {750, 15000, 30000};
 			cloudletList = generateCloudletList(range, brokerId, rangelength, rangefileSize, rangeoutputSize);
 			// submit cloudlet list to the broker
 			broker.submitCloudletList(cloudletList);
