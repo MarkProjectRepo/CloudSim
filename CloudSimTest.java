@@ -105,8 +105,8 @@ public class CloudSimTest {
 			int id = 0;
 			long length = 400;
 			long fileSize = 300;
-
 			long outputSize = 300;
+
 			UtilizationModel utilizationModel = new UtilizationModelStochastic();
 			Cloudlet cloudlet;
             for (int i = 0; i < 100; i++) {
@@ -115,7 +115,6 @@ public class CloudSimTest {
                                 (long)Math.random()*outputSize, utilizationModel, utilizationModel,
                                 utilizationModel);
                 cloudlet.setUserId(brokerId);
-                cloudlet.setVmId(vmid);
                 cloudletList.add(cloudlet);
             }
 
@@ -139,6 +138,22 @@ public class CloudSimTest {
 			e.printStackTrace();
 			Log.printLine("Unwanted errors happen");
 		}
+	}
+
+	private static ArrayList<Cloudlet> generateCloudletList(int length, int fileSize, long outputSize){
+		ArrayList cloudletList = new ArrayList<Cloudlet>();
+
+		UtilizationModel utilizationModel = new UtilizationModelStochastic();
+		Cloudlet cloudlet;
+		for (int i = 0; i < 100; i++) {
+			cloudlet =
+					new Cloudlet(i,(long)(Math.random()*length), pesNumber, (long)Math.random()*fileSize,
+							(long)Math.random()*outputSize, utilizationModel, utilizationModel,
+							utilizationModel);
+			cloudlet.setUserId(brokerId);
+			cloudletList.add(cloudlet);
+		}
+		return cloudletList;
 	}
 
 	/**
@@ -243,7 +258,7 @@ public class CloudSimTest {
 
 		String indent = ",";
 		Log.printLine("Cloudlet ID" + indent + "STATUS" + indent
-				+ "Data center ID" + indent + "VM ID" + indent + "Actual CPU"+indent + "RAM" + indent
+				+ "Data center ID" + indent + "VM ID" + indent + "Actual CPU" + indent
 				+ "Start Time" + indent + "Finish Time" + indent + "Wait Time");
 
 		DecimalFormat dft = new DecimalFormat("###.##");
@@ -251,14 +266,13 @@ public class CloudSimTest {
 			cloudlet = list.get(i);
 			Log.print(cloudlet.getCloudletId() + indent);
 
-			if (cloudlet.getCloudletStatus() == Cloudlet.SUCCESS) {
-				Log.print("SUCCESS");
+			if (cloudlet.getStatus() == Cloudlet.SUCCESS) {
+				Log.print(cloudlet.getStatus());
 
 				Log.printLine(indent + cloudlet.getResourceId()
 						+ indent + cloudlet.getVmId()
 						+ indent
 						+ dft.format(cloudlet.getActualCPUTime())
-                        + indent
 						+ indent + dft.format(cloudlet.getExecStartTime())
 						+ indent
 						+ dft.format(cloudlet.getFinishTime())
