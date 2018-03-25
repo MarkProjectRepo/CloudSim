@@ -111,7 +111,7 @@ public class CloudSimTest {
 			*/
 
 			//Range based cloudlet properties
-			int[] range = {100, 200, 100}; // Range represents the {Low , Medium , High} range cloudlets
+			int[] range = {200, 400, 200}; // Range represents the {Low , Medium , High} range cloudlets
 			long[] rangelength = {1000, 25000, 40000}; // The following properties are the same as for cloudlet but for their respective activity levels
 			long[] rangefileSize = {750, 15000, 30000};
 			long[] rangeoutputSize = {750, 15000, 30000};
@@ -121,10 +121,11 @@ public class CloudSimTest {
 
 			// Sixth step: Starts the simulation
 			CloudSim.startSimulation();
-            try {
-                Log.setOutput(new FileOutputStream("Output.csv"));
-            }catch(FileNotFoundException e){}
+
 			CloudSim.stopSimulation();
+			try {
+				Log.setOutput(new FileOutputStream("Output.csv"));
+			}catch(FileNotFoundException e){}
 
 			//Final step: Print results when simulation is over
 			List<Cloudlet> newList = broker.getCloudletReceivedList();
@@ -135,23 +136,25 @@ public class CloudSimTest {
 		}
 	}
 	private static ArrayList<Cloudlet> generateCloudletList(int number, int brokerId, long length, long fileSize, long outputSize){
-		ArrayList cloudletList = new ArrayList<Cloudlet>();
+		ArrayList<Cloudlet> cloudletList = new ArrayList<Cloudlet>();
 
 		UtilizationModel utilizationModel = new UtilizationModelStochastic();
 		Cloudlet cloudlet;
 		for (int i = 0; i < number; i++) {
 			cloudlet =
-					new Cloudlet(i, (long) (Math.random() * length), 1, (long) Math.random() * fileSize,
-							(long) Math.random() * outputSize, utilizationModel, utilizationModel,
+					new Cloudlet(i, (long) (Math.random() * length), 1, (long) (Math.random() * fileSize),
+							(long) (Math.random() * outputSize), utilizationModel, utilizationModel,
 							utilizationModel);
+
 			cloudlet.setUserId(brokerId);
 			cloudletList.add(cloudlet);
 		}
+
 		return cloudletList;
 	}
 
 	private static ArrayList<Cloudlet> generateCloudletList(int[] range, int brokerId, long[] length, long[] fileSize, long[] outputSize){
-		ArrayList cloudletList = new ArrayList<Cloudlet>();
+		ArrayList<Cloudlet> cloudletList = new ArrayList<Cloudlet>();
 
 		UtilizationModel utilizationModel = new UtilizationModelStochastic();
 		Cloudlet cloudlet;
@@ -163,14 +166,15 @@ public class CloudSimTest {
 		for (int n : range){
 			for (int i = 0; i < number; i++) {
 				cloudlet =
-						new Cloudlet(i, (long) (Math.random() * length[loc]), 1, (long) Math.random() * fileSize[loc],
-								(long) Math.random() * outputSize[loc], utilizationModel, utilizationModel,
+						new Cloudlet(i, (long) (Math.random() * length[loc]), 1, (long) (Math.random() * fileSize[loc]),
+								(long) (Math.random() * outputSize[loc]), utilizationModel, utilizationModel,
 								utilizationModel);
 				cloudlet.setUserId(brokerId);
 				cloudletList.add(cloudlet);
 			}
 			loc++;
 		}
+
 		return cloudletList;
 	}
 
@@ -279,26 +283,22 @@ public class CloudSimTest {
 		Cloudlet cloudlet;
 
 		String indent = ",";
-		Log.printLine("Cloudlet ID" + indent + "STATUS" + indent
-				+ "Data center ID" + indent + "VM ID" + indent + "Actual CPU" + indent
-				+ "Start Time" + indent + "Finish Time" + indent + "Wait Time");
+		Log.printLine("VM ID" + indent + "Actual CPU" + indent
+				+ "Length" + indent + "Input Size" + indent + "Output Size" + indent + "End Time");
 
 		DecimalFormat dft = new DecimalFormat("###.##");
 		for (int i = 0; i < size; i++) {
 			cloudlet = list.get(i);
-			Log.print(cloudlet.getCloudletId() + indent);
 
 			if (cloudlet.getStatus() == Cloudlet.SUCCESS) {
-				Log.print(cloudlet.getStatus());
-
-				Log.printLine(indent + cloudlet.getResourceId()
-						+ indent + cloudlet.getVmId()
+				Log.printLine(cloudlet.getVmId()
 						+ indent
 						+ dft.format(cloudlet.getActualCPUTime())
-						+ indent + dft.format(cloudlet.getExecStartTime())
+						+ indent + dft.format(cloudlet.getCloudletLength())
 						+ indent
-						+ dft.format(cloudlet.getFinishTime())
-                        + indent + dft.format(cloudlet.getWaitingTime()));
+						+ dft.format(cloudlet.getCloudletFileSize())
+                        + indent + dft.format(cloudlet.getCloudletOutputSize())
+						+ indent + cloudlet.getFinishTime());
 			}
 		}
 	}
