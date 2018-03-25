@@ -111,7 +111,7 @@ public class CloudSimTest {
 			*/
 
 			//Range based cloudlet properties
-			int[] range = {200, 400, 200}; // Range represents the {Low , Medium , High} range cloudlets
+			int[] range = {2000, 4000, 2000}; // Range represents the {Low , Medium , High} range cloudlets
 			long[] rangelength = {1000, 25000, 40000}; // The following properties are the same as for cloudlet but for their respective activity levels
 			long[] rangefileSize = {750, 15000, 30000};
 			long[] rangeoutputSize = {750, 15000, 30000};
@@ -153,24 +153,36 @@ public class CloudSimTest {
 		return cloudletList;
 	}
 
+	private static long RandomRangeLong(long min, long max){
+		return (long) (Math.random()*(max - min + 1) + min);
+	}
+
 	private static ArrayList<Cloudlet> generateCloudletList(int[] range, int brokerId, long[] length, long[] fileSize, long[] outputSize){
 		ArrayList<Cloudlet> cloudletList = new ArrayList<Cloudlet>();
 
 		UtilizationModel utilizationModel = new UtilizationModelStochastic();
 		Cloudlet cloudlet;
-		int number = 0;
-		for(int n : range)
-			number += n;
 
 		int loc = 0;
 		for (int n : range){
-			for (int i = 0; i < number; i++) {
-				cloudlet =
-						new Cloudlet(i, (long) (Math.random() * length[loc]), 1, (long) (Math.random() * fileSize[loc]),
-								(long) (Math.random() * outputSize[loc]), utilizationModel, utilizationModel,
-								utilizationModel);
-				cloudlet.setUserId(brokerId);
-				cloudletList.add(cloudlet);
+			if(loc == 0){
+				for (int i = 0; i < n; i++) {
+					cloudlet =
+							new Cloudlet(i, (long) (Math.random() * length[loc]), 1, (long) (Math.random() * fileSize[loc]),
+									(long) (Math.random() * outputSize[loc]), utilizationModel, utilizationModel,
+									utilizationModel);
+					cloudlet.setUserId(brokerId);
+					cloudletList.add(cloudlet);
+				}
+			}else {
+				for (int i = 0; i < n; i++) {
+					cloudlet =
+							new Cloudlet(i, RandomRangeLong(length[loc-1], length[loc]), 1, RandomRangeLong(fileSize[loc], fileSize[loc-1]),
+									RandomRangeLong(outputSize[loc], outputSize[loc-1]), utilizationModel, utilizationModel,
+									utilizationModel);
+					cloudlet.setUserId(brokerId);
+					cloudletList.add(cloudlet);
+				}
 			}
 			loc++;
 		}
@@ -298,7 +310,7 @@ public class CloudSimTest {
 						+ indent
 						+ dft.format(cloudlet.getCloudletFileSize())
                         + indent + dft.format(cloudlet.getCloudletOutputSize())
-						+ indent + cloudlet.getFinishTime());
+						+ indent + dft.format(cloudlet.getFinishTime()));
 			}
 		}
 	}
