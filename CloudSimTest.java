@@ -111,7 +111,7 @@ public class CloudSimTest {
 			*/
 
 			//Range based cloudlet properties
-			int[] range = {2000, 4000, 2000}; // Range represents the {Low , Medium , High} range cloudlets
+			int[] range = {3000, 5000, 2000}; // Range represents the {Low , Medium , High} range cloudlets
 			long[] rangelength = {1000, 25000, 40000}; // The following properties are the same as for cloudlet but for their respective activity levels
 			long[] rangefileSize = {750, 15000, 30000};
 			long[] rangeoutputSize = {750, 15000, 30000};
