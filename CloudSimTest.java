@@ -111,7 +111,7 @@ public class CloudSimTest {
 			*/
 
 			//Range based cloudlet properties
-			int[] range = {3000, 5000, 2000}; // Range represents the {Low , Medium , High} range cloudlets
+			int[] range = {30000, 50000, 20000}; // Range represents the {Low , Medium , High} range cloudlets
 			long[] rangelength = {1000, 25000, 40000}; // The following properties are the same as for cloudlet but for their respective activity levels
 			long[] rangefileSize = {750, 15000, 30000};
 			long[] rangeoutputSize = {750, 15000, 30000};
@@ -124,7 +124,7 @@ public class CloudSimTest {
 
 			CloudSim.stopSimulation();
 			try {
-				Log.setOutput(new FileOutputStream("Output.csv"));
+				Log.setOutput(new FileOutputStream("D:\\Documents\\cloudsim-4.0\\cloudsim-cloudsim-4.0\\modules\\cloudsim-examples\\src\\main\\java\\org\\cloudbus\\cloudsim\\examples\\Output.csv"));
 			}catch(FileNotFoundException e){}
 
 			//Final step: Print results when simulation is over
