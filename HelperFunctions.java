@@ -7,17 +7,26 @@ import java.util.Random;
 
 public class HelperFunctions {
 	
+	private NormalDistribution nd;
+	private float lowBound;
+	private float highBound;
+	
+	public HelperFunctions(float lowBound, float highBound){
+		this.lowBound = lowBound;
+		this.highBound = highBound;
+		float mean = (lowBound + highBound)/2;
+		//standard deviation is half of the range
+		float sd = (highBound - lowBound)/2;
+		nd = new NormalDistribution(mean, sd);
+	}
+	
 	/**
 	 * Returns a random number, which is normally distributed
 	 * @param lowerBound The lower bound for the numbers being generated
 	 * @param highBound The upper bound for the numbers being generated
 	 * @return The next normally distributed random number.
 	 */
-	public static float NextPseudoRandomND(float lowBound, float highBound){
-		float mean = (lowBound + highBound)/2;
-		//standard deviation is half of the range
-		float sd = (highBound - lowBound)/2;
-		NormalDistribution nd = new NormalDistribution(mean, sd);
+	public float NextPseudoRandomND(){
 		float ret = (float)nd.sample();
 		
 		if(ret < lowBound)
@@ -36,8 +45,7 @@ public class HelperFunctions {
 	 */
 	public static float Random(float lower, float higher){
 		float range = higher - lower;
-		float rand = (float) (Math.random() * range);
-		rand += lower;
+		float rand = (float) (Math.random() * range) + lower;
 		return rand;
 	}
 

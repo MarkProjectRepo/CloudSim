@@ -135,6 +135,68 @@ public class CloudSimTest {
 			Log.printLine("Unwanted errors happen");
 		}
 	}
+	
+	private static ArrayList<Cloudlet> generateNormalCloudletList(int number, int brokerId, long length, long fileSize, long outputSize){
+		ArrayList<Cloudlet> cloudletList = new ArrayList<Cloudlet>();
+		
+		HelperFunctions randLength = new HelperFunctions(0, length);
+		HelperFunctions randFileSize = new HelperFunctions(0, fileSize);
+		HelperFunctions randOutput = new HelperFunctions(0, outputSize);
+		
+		UtilizationModel utilizationModel = new UtilizationModelStochastic();
+		Cloudlet cloudlet;
+		for (int i = 0; i < number; i++) {
+			cloudlet =
+					new Cloudlet(i, (long)randLength.NextPseudoRandomND(), 1, (long) randFileSize.NextPseudoRandomND(),
+							(long)randOutput.NextPseudoRandomND(), utilizationModel, utilizationModel,
+							utilizationModel);
+
+			cloudlet.setUserId(brokerId);
+			cloudletList.add(cloudlet);
+		}
+
+		return cloudletList;
+	}
+	
+	private static ArrayList<Cloudlet> generateNormalCloudletList(int[] range, int brokerId, long[] length, long[] fileSize, long[] outputSize){
+		ArrayList<Cloudlet> cloudletList = new ArrayList<Cloudlet>();
+
+		UtilizationModel utilizationModel = new UtilizationModelStochastic();
+		Cloudlet cloudlet;
+
+		int loc = 0;
+		for (int n : range){
+			if(loc == 0){
+				HelperFunctions randLength = new HelperFunctions(0, length[loc]);
+				HelperFunctions randFileSize = new HelperFunctions(0, fileSize[loc]);
+				HelperFunctions randOutput = new HelperFunctions(0, outputSize[loc]);
+				for (int i = 0; i < n; i++) {
+					cloudlet =
+							new Cloudlet(i, (long) randLength.NextPseudoRandomND(), 1, (long) randFileSize.NextPseudoRandomND(),
+									(long) randOutput.NextPseudoRandomND(), utilizationModel, utilizationModel,
+									utilizationModel);
+					cloudlet.setUserId(brokerId);
+					cloudletList.add(cloudlet);
+				}
+			}else {
+				HelperFunctions randLength = new HelperFunctions(length[loc-1], length[loc]);
+				HelperFunctions randFileSize = new HelperFunctions(fileSize[loc-1], fileSize[loc]);
+				HelperFunctions randOutput = new HelperFunctions(outputSize[loc-1], outputSize[loc]);
+				for (int i = 0; i < n; i++) {
+					cloudlet =
+							new Cloudlet(i, (long)randLength.NextPseudoRandomND(), 1, (long)randFileSize.NextPseudoRandomND(),
+									(long)randOutput.NextPseudoRandomND(), utilizationModel, utilizationModel,
+									utilizationModel);
+					cloudlet.setUserId(brokerId);
+					cloudletList.add(cloudlet);
+				}
+			}
+			loc++;
+		}
+
+		return cloudletList;
+	}
+	
 	private static ArrayList<Cloudlet> generateCloudletList(int number, int brokerId, long length, long fileSize, long outputSize){
 		ArrayList<Cloudlet> cloudletList = new ArrayList<Cloudlet>();
 
