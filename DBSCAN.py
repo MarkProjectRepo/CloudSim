@@ -3,6 +3,7 @@ import pandas as pd
 
 from sklearn.ensemble import IsolationForest
 from sklearn.cluster import DBSCAN
+from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
@@ -17,9 +18,9 @@ X = StandardScaler().fit_transform(X[['Actual CPU', 'Length','Input Size', 'Outp
 pca = PCA(n_components=2)
 X = pca.fit_transform(X) # Reduce dimensionality
 
-X = X[np.random.randint(100000, size=20000), :]
+X = X[np.random.randint(100000, size=25000), :]
 
-db = DBSCAN(eps=0.13, min_samples=10).fit(X)
+db = DBSCAN(eps=0.11, min_samples=25).fit(X)
 core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
 core_samples_mask[db.core_sample_indices_] = True
 labels = db.labels_
@@ -31,9 +32,11 @@ print(n_clusters_)
 import matplotlib.pyplot as plt
 
 # Black removed and is used for noise instead.
+plt.figure(1)
 unique_labels = set(labels)
 colors = [plt.cm.Spectral(each)
           for each in np.linspace(0, 1, len(unique_labels))]
+plt.subplot(211)
 for k, col in zip(unique_labels, colors):
     if k == -1:
         # Black used for noise.
@@ -50,4 +53,7 @@ for k, col in zip(unique_labels, colors):
              markeredgecolor='k', markersize=6)
 
 plt.title('Estimated number of clusters: %d' % n_clusters_)
+plt.subplot(212)
+plt.scatter(X[:, 0], X[:, 1], s=1)
+print(db.get_params())
 plt.show()
