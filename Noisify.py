@@ -38,19 +38,17 @@ noisyPoints = [["VM ID","Actual CPU","Length","Input Size","Output Size","End Ti
 # It iterates through the CSV file and adds the results to the two arrays
 for cloudlet in output:
 	if(random.random() < (NOISE_PERCENT)):
-		for data in cloudlet[1:]: # skip VM id
-			temp = data
+		for i, data in enumerate(cloudlet[1:]): # skip VM id
 			# Either add or remove from data value on coinflip
 			if(random.random() > 0.5):
-				data += int((random.random()+1) * (100*data/(random.random()+0.5))) 
+				cloudlet[i] += int((random.random()+1) * (100*data/(random.random()+0.5))) 
 			else:
-				data -= int((random.random()+1) * (100*data/(random.random()+0.5)))
+				cloudlet[i] -= int((random.random()+1) * (100*data/(random.random()+0.5)))
 			
 			#Ensure positive data			
 			if(data < 0):
-				data = temp
-				data += int((random.random()+0.5) * (100*data/(random.random()+0.5)))
-	
+				cloudlet[i] += int((random.random()+0.5) * (100*data/(random.random()+0.5)))
+
 		noisyPoints.append(cloudlet)
 	# For full list of data (anomalies & regular points)
 	dataOutput.append(cloudlet)
