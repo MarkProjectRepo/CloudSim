@@ -46,8 +46,8 @@ for cloudlet in output:
 				cloudlet[i] -= int((random.random()+1) * (100*data/(random.random()+0.5)))
 			
 			#Ensure positive data			
-			if(data < 0):
-				cloudlet[i] += int((random.random()+0.5) * (100*data/(random.random()+0.5)))
+			if(cloudlet[i] < 0):
+				cloudlet[i] *= 1
 
 		noisyPoints.append(cloudlet)
 	# For full list of data (anomalies & regular points)
