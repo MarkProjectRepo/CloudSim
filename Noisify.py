@@ -40,14 +40,17 @@ for cloudlet in output:
 	if(random.random() < (NOISE_PERCENT)):
 		for i, data in enumerate(cloudlet[1:]): # skip VM id
 			# Either add or remove from data value on coinflip
-			if(random.random() > 0.5):
-				cloudlet[i] += int((random.random()+1) * (100*data/(random.random()+0.5))) 
-			else:
-				cloudlet[i] -= int((random.random()+1) * (100*data/(random.random()+0.5)))
+			#if(random.random() > 0.5):
+			#	cloudlet[i] += int((random.random()+1) * (5*data/(random.random()+0.5))) 
+			#else:
+			#	cloudlet[i] -= int((random.random()+1) * (5*data/(random.random()+0.5)))
 			
+			# Add / Remove up to 2*50% of the data value			
+			cloudlet[i] += int((random.random()-0.5) * 2*data)
+
 			#Ensure positive data			
 			if(cloudlet[i] < 0):
-				cloudlet[i] *= 1
+				cloudlet[i] *= -1
 
 		noisyPoints.append(cloudlet)
 	# For full list of data (anomalies & regular points)
