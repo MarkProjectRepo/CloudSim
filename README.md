@@ -1,6 +1,8 @@
 # CloudSim
 Cloud computing class project
 
+Presentation Slide Deck: https://drive.google.com/open?id=1GnjyBbARMEE3GdflxSKx01L9QmYc5TSyTZjLdU3gJL4
+
 The purpose of this mod on one of the existing examples in cloudsim is to be able to generate a solid foundation of data
 on which we can perform experiments in continuous authentication of a user using a simple cloud infrastructure.
 
