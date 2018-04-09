@@ -3,7 +3,7 @@ import pandas as pd
 
 from sklearn.ensemble import IsolationForest
 from sklearn.cluster import DBSCAN
-from sklearn import metrics
+from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
@@ -59,6 +59,8 @@ for k, col in zip(unique_labels, colors):
     xy = XY[class_member_mask & ~core_samples_mask]
     plt.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=tuple(col),
              markeredgecolor='k', markersize=6)
+
+print(f1_score(y_labels, labels, average='macro'))
 
 plt.title('Estimated number of clusters: %d' % n_clusters_)
 plt.subplot(212)
